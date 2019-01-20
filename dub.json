@@ -1,0 +1,12 @@
+{
+	"description": "Lua bindings",
+	"dependencies": {
+        	"bindbc-loader": "~>0.1.1"
+	},
+	"authors": [
+		"Clipsey"
+	],
+	"copyright": "Copyright © 2019, Clipsey",
+	"license": "MIT",
+	"name": "lua"
+}
