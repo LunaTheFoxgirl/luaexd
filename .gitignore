@@ -12,3 +12,5 @@ lua-test-*
 *.o
 *.obj
 *.lst
+.dub/
+dub.selections.json
