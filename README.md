@@ -33,7 +33,7 @@ Example (ManagedUserData!T):
 
 ```d
 
-class myBoundClass {
+class MyBoundClass {
 
     // Pretty much the constructor.
     // THIS WILL CHANGE IN THE FUTURE.
@@ -61,6 +61,59 @@ void main() {
     LuaState state = newState();
 
     ManagedUserData!MyBoundClass boundInstance = state.bindUserData!MyBoundClass;
+
+    state.executeString(q{
+        local classInstance = MyBoundClass()
+        // get value.
+        print(classInstance.meaningOfLife);
+
+        // call function.
+        print(classInstance.getMeaningOfLife());
+
+        // call function with parameters.
+        print(classInstance.getMeaningOfLifeTimes(2));
+    });
+}
+
+```
+
+Example (mixin):
+
+```d
+class MyBoundClass {
+
+    // Insert bindings.
+    mixin luaImpl!Element;
+
+    // Pretty much the constructor.
+    // THIS WILL CHANGE IN THE FUTURE.
+    void instantiate(Variant[] params) {
+
+        // Empty constructor.
+        return;
+    }
+
+    @Expose
+    int meaningOfLife = 42;
+
+    @ExposeFunction
+    int getMeaningOfLife() {
+        return meaningOfLife;
+    }
+
+    @ExposeFunction
+    int getMeaningOfLifeTimes(int val) {
+        return meaningOfLife * val;
+    }
+}
+
+void main() {
+    LuaState state = newState();
+
+    MyBoundClass classInstance = new MyBoundClass();
+
+    // Bind to lua.
+    classInstance.bindToLua(state);
 
     state.executeString(q{
         local classInstance = MyBoundClass()
